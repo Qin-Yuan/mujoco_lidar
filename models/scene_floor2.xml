@@ -1,0 +1,144 @@
+<mujoco model="scene_demo">
+  <visual>
+    <headlight diffuse="0.6 0.6 0.6" ambient="0.3 0.3 0.3" specular="0 0 0"/>
+    <!-- <rgba haze="0.15 0.25 0.35 1"/> -->
+    <global azimuth="120" elevation="-20"/>
+  </visual>
+
+  <asset>
+    <mesh name="eight" file="eight.obj"/>
+  </asset>
+
+  <worldbody>
+    <light pos=" 6 0 10." dir="0 0 -1"/>
+    <light pos="-6 0 10." dir="0 0 -1"/>
+    <light pos="0  6 10." dir="0 0 -1"/>
+    <light pos="0 -6 10." dir="0 0 -1"/>
+
+    <!-- 地面+四面墙 -->
+    <geom name="ground" type="plane" size="10 10 0.1" pos="0 0 0" rgba="0.15 0.15 0.18 1"/>
+    <geom name="wall1" type="box" size="1e-3 10 0.5" pos=" 10 0 0.5" rgba="0.9 0.9 0.9 1"/>
+    <geom name="wall2" type="box" size="1e-3 10 0.5" pos="-10 0 0.5" rgba="0.9 0.9 0.9 1"/>
+    <geom name="wall3" type="box" size="10 1e-3 0.5" pos="0  10 0.5" rgba="0.9 0.9 0.9 1"/>
+    <geom name="wall4" type="box" size="10 1e-3 0.5" pos="0 -10 0.5" rgba="0.9 0.9 0.9 1"/>
+
+    <!-- 盒子 -->
+    <geom name="box1" type="box" size="0.5 0.5 0.5" pos="5 0 0.5" euler="45 -45 0" rgba="1 0 0 1"/>
+    <geom name="box2" type="box" size="1.3 0.8 0.2" pos="-5 -1 0.2" rgba="1 0 0 0.7"/>
+    <geom name="box3" type="box" size="0.6 0.2 0.3" pos="4.4 -4 0.3" rgba="1 0 0 0.7"/>
+    <geom name="box4" type="box" size="0.2 0.2 0.4" pos="0 -4.2 0.4" rgba="1 0 0 0.7"/>
+    <geom name="box5" type="box" size="0.4 0.6 0.4" pos="-4.2 -6 0.4" rgba="1 0 0 0.7"/>
+    <geom name="box6" type="box" size="0.7 0.5 0.2" pos="4.2 5 0.2" rgba="1 0 0 0.7"/>
+    <!-- <geom name="box7" type="box" size="1.0 0.5 0.35" pos="0 3 0.4" rgba="1 0 0 0.7"/> -->
+
+    <!-- 球体 -->
+    <geom name="sphere1" type="sphere" size="0.5" pos="4 2 0.5" rgba="0 1 0 1"/>
+    <geom name="sphere2" type="sphere" size="0.4" pos="-5 2 0.3" rgba="0 1 0 0.7"/>
+
+    <!-- 圆柱体 -->
+    <geom name="cylinder1" type="cylinder" size="0.4 0.6" pos="-3 -5 0.4" quat="1 0 1 0" rgba="0 0 1 1"/>
+    <geom name="cylinder2" type="cylinder" size="0.2 0.3" pos="2 -2 0.3" rgba="0 0 1 0.7"/>
+
+    <!-- 椭球体 -->
+    <geom name="ellipsoid1" type="ellipsoid" size="0.4 0.3 0.5" pos="3 -6 0.5" rgba="1 1 0 1"/>
+    <geom name="ellipsoid2" type="ellipsoid" size="0.2 0.4 0.3" pos="-5 5 0.3" rgba="1 1 0 0.7"/>
+
+    <!-- 胶囊体 -->
+    <geom name="capsule1" type="capsule" size="0.3 0.5" pos="-3 1 0.8" quat="1 3 1 1" rgba="1 0 1 1"/>
+    <geom name="capsule2" type="capsule" size="0.2 0.4" pos="-3 -2 0.6" quat="0.1 0 0.6 0.2" rgba="1 0 1 0.7"/>
+    
+    <!-- mesh -->
+    <geom mesh="eight" pos="-3 4 0.5" quat="0.4 0.1 0.2 0.3" rgba="0 1 0 1" type="mesh"/>
+    
+
+    <!-- 斜坡楼梯：从一楼到二楼（z=0 -> z=3） -->
+    <geom name="stair_ramp"
+          type="box"
+          size="1.0 7 0.01"
+          pos="0 0 0.963"
+          euler="-0.15 0 0"
+          rgba="0.45 0.45 0.5 0.5"/>
+
+
+    <!-- ================= 二楼平台 ================= -->
+        <!-- 椭球体 -->
+    <geom name="ellipsoid3" type="ellipsoid" size="0.4 0.3 0.7" pos="3 -9 2.8" rgba="1 1 0 1"/>
+    <geom name="ellipsoid4" type="ellipsoid" size="0.6 0.4 0.8" pos="-3 -7 2.8" rgba="1 1 0 0.7"/>
+
+    <!-- 胶囊体 -->
+    <geom name="capsule4" type="capsule" size="0.2 0.4" pos="-3 -3 2.6" quat="0.1 0 0.3 0.2" rgba="1 0 1 0.7"/>
+    
+    <geom name="box7" type="box" size="0.5 0.5 0.5" pos="3 -3 2.8" euler="45 -45 0" rgba="1 0 0 1"/>
+  <geom name="box8" type="box" size="0.5 0.5 0.5" pos="0 -10 2.8" rgba="1 0 0 1"/>
+
+
+    <!-- 平台地面 -->
+    <!-- 左侧楼板 -->
+    <geom name="floor_2f_left"
+          type="box"
+          size="2.25 5.5 0.02"
+          pos="-3.25 -6.4 2.0"
+          rgba="0.45 0.45 0.5 0.5"/>
+
+    <!-- 右侧楼板 -->
+    <geom name="floor_2f_right"
+          type="box"
+          size="2.25 5.5 0.02"
+          pos="3.25 -6.4 2.0"
+          rgba="0.45 0.45 0.5 0.5"/>
+
+    <!-- 后侧楼板 -->
+    <geom name="floor_2f_back"
+          type="box"
+          size="1.0 2.5 0.02"
+          pos="0 -9.4 2.0"
+          rgba="0.45 0.45 0.5 0.5"/>
+
+    <geom name="wall_2f_left_outer"
+          type="box"
+          size="0.05 5.5 0.6"
+          pos="-5.5 -6.4 2.6"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <geom name="wall_2f_right_outer"
+          type="box"
+          size="0.05 5.5 0.6"
+          pos="5.5 -6.4 2.6"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <geom name="wall_2f_back_inner"
+          type="box"
+          size="5.5 0.05 0.6"
+          pos="0 -11.9 2.6"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <geom name="wall_2f_left_front"
+          type="box"
+          size="2.2 0.05 0.6"
+          pos="3.3 -0.9 2.6"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <geom name="wall_2f_right_front"
+          type="box"
+          size="2.2 0.05 0.6"
+          pos="-3.3 -0.9 2.6"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <!-- 楼梯侧板 -->
+    <geom name="wall_stair_left"
+          type="box"
+          size="0.05 7 0.6"
+          pos="-1.05 0 1.6"
+          euler="-0.15 0 0"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+    <geom name="wall_stair_right"
+          type="box"
+          size="0.05 7 0.6"
+          pos="1.05 0 1.6"
+          euler="-0.15 0 0"
+          rgba="0.7 0.7 0.7 0.5"/>
+
+  </worldbody>
+
+</mujoco>
