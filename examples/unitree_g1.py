@@ -35,6 +35,8 @@ class OnnxController:
             policy_path, providers=["CPUExecutionProvider"]
         )
 
+        self.command = np.zeros(3, dtype=np.float32)
+
         self._action_scale = action_scale
         self._default_angles = default_angles
         self._last_action = np.zeros_like(default_angles, dtype=np.float32)
@@ -80,7 +82,7 @@ class OnnxController:
             linvel,
             gyro,
             gravity,
-            command,
+            self.command,
             joint_angles,
             joint_velocities,
             self._last_action,
@@ -98,6 +100,11 @@ class OnnxController:
             data.ctrl[:] = onnx_pred * self._action_scale + self._default_angles
             phase_tp1 = self._phase + self._phase_dt
             self._phase = np.fmod(phase_tp1 + np.pi, 2 * np.pi) - np.pi
+
+    def set_control(self, v_x, v_y, w_z):
+        self.command[0] = v_x
+        self.command[1] = v_y
+        self.command[2] = w_z
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='MuJoCo LiDAR可视化与Unitree G1 ROS2集成')

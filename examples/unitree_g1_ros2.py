@@ -15,6 +15,8 @@ import tf2_ros
 from rclpy.node import Node
 from geometry_msgs.msg import TransformStamped
 from sensor_msgs.msg import PointCloud2, PointField
+from sensor_msgs.msg import Imu
+from geometry_msgs.msg import Twist
 
 from mujoco_lidar import scan_gen
 from mujoco_lidar import MjLidarWrapper
@@ -54,7 +56,11 @@ class OnnxControllerRos2(OnnxController, Node):
         self.tf_broadcaster = tf2_ros.TransformBroadcaster(self)
         self.static_broadcaster = tf2_ros.StaticTransformBroadcaster(self)
 
-        self.lidar_puber = self.create_publisher(PointCloud2, '/lidar_points', 1)
+        self.lidar_puber = self.create_publisher(PointCloud2, '/sensor/lidar/pointcloud', 1)
+        self.imu_pub = self.create_publisher(Imu, '/sensor/lidar/imu', 10)
+
+        self.create_subscription(Twist, '/cmd_vel', self.cmd_vel_callback, 10)
+
         self.last_pub_time_lidar = -1.
         # 定义点云字段
         fields = [
@@ -150,9 +156,42 @@ class OnnxControllerRos2(OnnxController, Node):
 
         self.lidar_puber.publish(self.pc_msg)
 
+    def publish_imu(self, mj_data, time_stamp):
+        imu_msg = Imu()
+        imu_msg.header.stamp = time_stamp
+        imu_msg.header.frame_id = "imu"
+
+        # orientation: framequat (world -> imu)
+        q = mj_data.sensor("orientation").data
+        imu_msg.orientation.w = q[0]
+        imu_msg.orientation.x = q[1]
+        imu_msg.orientation.y = q[2]
+        imu_msg.orientation.z = q[3]
+
+        # angular velocity: gyro (imu frame)
+        w = mj_data.sensor("gyro").data
+        imu_msg.angular_velocity.x = w[0]
+        imu_msg.angular_velocity.y = w[1]
+        imu_msg.angular_velocity.z = w[2]
+
+        # linear acceleration: accelerometer (imu frame, 含重力)
+        a = mj_data.sensor("accelerometer").data
+        # qys: fast_lio2 会自动缩放 9.8
+        scale = 9.80
+        imu_msg.linear_acceleration.x = a[0] / scale
+        imu_msg.linear_acceleration.y = a[1] / scale
+        imu_msg.linear_acceleration.z = a[2] / scale
+
+        self.imu_pub.publish(imu_msg)
+
     def get_control(self, model: mujoco.MjModel, data: mujoco.MjData) -> None:
+        rclpy.spin_once(self, timeout_sec=0.0)
+
         self.update_ros2(data)
         super().get_control(model, data)
+
+    def cmd_vel_callback(self, msg: Twist):
+        self.set_control(msg.linear.x, msg.linear.y, msg.angular.z)
 
 def load_callback(model=None, data=None):
     global args

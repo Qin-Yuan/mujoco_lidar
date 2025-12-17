@@ -1,6 +1,6 @@
 <mujoco model="scene_g1">
   <include file="unitree_g1/g1_mjx_feetonly.xml"/>
-  <include file="scene.xml"/>
+  <include file="scene_floor2.xml"/>
 
   <keyframe>
     <key name="home"
