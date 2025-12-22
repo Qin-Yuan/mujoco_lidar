@@ -89,8 +89,10 @@
       <!-- <site name="imu" pos="-0.02557 0 0.04232"/>
       <site name="lidar" pos="0.295 0 -0.075" quat="0.05 0 1 0" rgba="1 0 0 1" size="0.005" group="5"/> -->
       <site name="base_link" pos="0.0 0 0.0"/>
-      <site name="imu" pos="0.0 0 0.1"/>
-      <site name="lidar" pos="0.0 0 0.1" quat="1 0 0 0" rgba="1 0 0 1" size="0.005" group="5"/>
+      <site name="imu" pos="-0.02557 0 0.04232"/>
+      <!-- <site name="lidar" pos="0.0 0 0.1" quat="1 0 0 0" rgba="1 0 0 1" size="0.005" group="5"/> -->
+      <site name="lidar_imu" pos="0.3 0 0.1" quat="0 0.383 0 0.924"/>
+      <site name="lidar" pos="0.3 0 0.1" quat="0 0.383 0 0.924"/>
       <body name="FL_hip" pos="0.1934 0.0465 0">
         <inertial pos="-0.0054 0.00194 -0.000105" quat="0.497014 0.499245 0.505462 0.498237" mass="0.678"
           diaginertia="0.00088403 0.000596003 0.000479967"/>
@@ -250,6 +252,9 @@
     <gyro site="imu" name="gyro"/>
     <accelerometer site="imu" name="accelerometer"/>
     <velocimeter site="imu" name="local_linvel"/>
+    <gyro site="lidar_imu" name="lidar_gyro"/>
+    <accelerometer site="lidar_imu" name="lidar_accelerometer"/>
+    <framequat objtype="site" objname="lidar_imu" name="lidar_orientation"/>
     <framezaxis objtype="site" objname="imu" name="upvector"/>
     <framequat objtype="site" objname="imu" name="orientation"/>
     <framepos objtype="site" objname="imu" name="global_position"/>

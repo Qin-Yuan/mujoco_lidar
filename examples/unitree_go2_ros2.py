@@ -163,20 +163,20 @@ class OnnxControllerRos2(OnnxController, Node):
         imu_msg.header.frame_id = "imu"
 
         # orientation: framequat (world -> imu)
-        q = mj_data.sensor("orientation").data
+        q = mj_data.sensor("lidar_orientation").data
         imu_msg.orientation.w = q[0]
         imu_msg.orientation.x = q[1]
         imu_msg.orientation.y = q[2]
         imu_msg.orientation.z = q[3]
 
         # angular velocity: gyro (imu frame)
-        w = mj_data.sensor("gyro").data
+        w = mj_data.sensor("lidar_gyro").data
         imu_msg.angular_velocity.x = w[0]
         imu_msg.angular_velocity.y = w[1]
         imu_msg.angular_velocity.z = w[2]
 
         # linear acceleration: accelerometer (imu frame, 含重力)
-        a = mj_data.sensor("accelerometer").data
+        a = mj_data.sensor("lidar_accelerometer").data
         # qys: fast_lio2 会自动缩放 9.8
         scale = 9.80
         imu_msg.linear_acceleration.x = a[0] / scale
