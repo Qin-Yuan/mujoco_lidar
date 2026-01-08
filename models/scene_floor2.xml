@@ -28,12 +28,24 @@
     <geom name="box3" type="box" size="0.6 0.2 0.3" pos="4.4 -4 0.3" rgba="1 0 0 0.7"/>
     <geom name="box4" type="box" size="0.2 0.2 0.4" pos="0 -4.2 0.4" rgba="1 0 0 0.7"/>
     <geom name="box5" type="box" size="0.4 0.6 0.4" pos="-4.2 -6 0.4" rgba="1 0 0 0.7"/>
-    <geom name="box6" type="box" size="0.7 0.5 0.2" pos="4.2 5 0.2" rgba="1 0 0 0.7"/>
+    
+    <body name="box6_body" pos="0 0 0">
+      <freejoint/>
+      <geom name="box6" type="box" size="0.7 0.5 0.8" pos="4.2 5 0.8" rgba="1 0 0 0.7"/>
+    </body>
+    
     <!-- <geom name="box7" type="box" size="1.0 0.5 0.35" pos="0 3 0.4" rgba="1 0 0 0.7"/> -->
 
     <!-- 球体 -->
     <geom name="sphere1" type="sphere" size="0.5" pos="4 2 0.5" rgba="0 1 0 1"/>
     <geom name="sphere2" type="sphere" size="0.4" pos="-5 2 0.3" rgba="0 1 0 0.7"/>
+    <!-- <body name="sphere2_body" pos="0 0 0">
+      <freejoint/>
+      <geom name="sphere2"
+            type="sphere"
+            size="0.4"
+            rgba="0 1 0 0.7"/>
+    </body> -->
 
     <!-- 圆柱体 -->
     <geom name="cylinder1" type="cylinder" size="0.4 0.6" pos="-3 -5 0.4" quat="1 0 1 0" rgba="0 0 1 1"/>
